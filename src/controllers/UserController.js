@@ -22,6 +22,17 @@ class UserController {
       return res.status(400).json({ message: "Bad Request" });
     }
   }
+
+  async show(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await User.findByPk(id);
+      return res.status(200).json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "BadRequest" });
+    }
+  }
 }
 
 export default new UserController();
