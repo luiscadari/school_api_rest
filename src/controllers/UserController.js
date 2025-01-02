@@ -12,6 +12,16 @@ class UserController {
         .json({ errors: e.errors.map((err) => err.message) });
     }
   }
+  //index
+  async index(req, res) {
+    try {
+      const users = await User.findAll();
+      return res.status(200).json(users);
+    } catch (e) {
+      console.log("Erro", e);
+      return res.status(400).json({ message: "Bad Request" });
+    }
+  }
 }
 
 export default new UserController();
