@@ -33,6 +33,28 @@ class UserController {
       return res.status(400).json({ message: "BadRequest" });
     }
   }
+
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).json({
+          errros: ["id is missing!"],
+        });
+      }
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(400).json({
+          errors: ["Usuário não existe"],
+        });
+      }
+      const newUser = await user.update(req.body);
+      return res.status(200).json(newUser);
+    } catch (e) {
+      console.log(e);
+      return res.json(null);
+    }
+  }
 }
 
 export default new UserController();
