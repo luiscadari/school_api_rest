@@ -55,6 +55,22 @@ class UserController {
       return res.json(null);
     }
   }
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.json(null);
+      }
+      const user = await User.findByPk(id);
+      await user.destroy();
+      return res.status(200).json(user);
+    } catch (e) {
+      return res.status(400).json({
+        errors: [e],
+      });
+    }
+  }
 }
 
 export default new UserController();
