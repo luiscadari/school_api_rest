@@ -62,7 +62,8 @@ class StudentController {
       if (!student) {
         return res.status(404).json({ error: "Student not found" });
       }
-      res.status(200).json(student);
+      const { name, email, age } = student;
+      res.status(200).json({ id, name, email, age });
     } catch (e) {
       console.error(e);
       res.json({ error: e });
