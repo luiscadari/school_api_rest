@@ -4,16 +4,74 @@ export default class Student extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        last_name: Sequelize.STRING,
-        age: Sequelize.INTEGER,
-        email: Sequelize.STRING,
-        weight: Sequelize.FLOAT,
-        height: Sequelize.FLOAT,
+        name: {
+          type: Sequelize.STRING,
+          defaultValue: "",
+          allowNull: false,
+          validate: {
+            notEmpty: true,
+            len: {
+              args: [3, 255],
+              msg: "Name must be between 3 and 255 characters long",
+            },
+          },
+        },
+        last_name: {
+          type: Sequelize.STRING,
+          defaultValue: "",
+          allowNull: false,
+          validate: {
+            notEmpty: true,
+            len: {
+              args: [3, 255],
+              msg: "Last Name must be between 3 and 255 characters long",
+            },
+          },
+        },
+        age: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          validate: {
+            isInt: {
+              msg: "Age must be an integer",
+            },
+            notEmpty: true,
+          },
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          validate: {
+            isEmail: {
+              msg: "Email must be a valid email address",
+            },
+            notEmpty: true,
+          },
+        },
+        weight: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          validate: {
+            isFloat: {
+              msg: "Weight must be a valid float number",
+            },
+            notEmpty: true,
+          },
+        },
+        height: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          validate: {
+            isFloat: {
+              msg: "Height must be a valid float number",
+            },
+            notEmpty: true,
+          },
+        },
       },
       {
         sequelize,
-      }
+      },
     );
     return this;
   }
