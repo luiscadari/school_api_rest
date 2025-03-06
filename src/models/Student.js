@@ -42,7 +42,7 @@ export default class Student extends Model {
           type: Sequelize.STRING,
           allowNull: false,
           unique: {
-            msg,
+            msg: "Email must be unique",
           },
           validate: {
             isEmail: {
