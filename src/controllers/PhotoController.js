@@ -11,12 +11,17 @@ class PhotoController {
     return upload.single("file")(req, res, async (err) => {
       if (err)
         return res.status(400).json({ error: "Tipo de arquivo inválido" });
-      const { originalname, filename } = req.file;
-      const { id } = req.body;
-      if (!id || !originalname || !filename)
-        return res.status(400).json({ error: "Params are required" });
-      const photo = await Photo.create({ originalname, filename, id });
-      return res.status(200).json(photo);
+      try {
+        const { originalname, filename } = req.file;
+        const { id } = req.body;
+        if (!id || !originalname || !filename)
+          return res.status(400).json({ error: "Params are required" });
+        const photo = await Photo.create({ originalname, filename, id });
+        return res.status(200).json(photo);
+      } catch (e) {
+        console.error(e);
+        return res.status(400).json({ message: "Usuário não encontrado" });
+      }
     });
   }
 }
