@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import helmet from "helmet";
 import "./src/database";
 import homeRoutes from "./src/routes/homeRoutes";
 import userRoutes from "./src/routes/userRoutes";
@@ -8,6 +10,18 @@ import photoRoutes from "./src/routes/photoRoutes";
 import dotenv from "dotenv";
 dotenv.config();
 
+const whitelist = ["http://localhost:3000"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by cors"));
+    }
+  },
+};
+
 class App {
   constructor() {
     this.app = express();
@@ -15,6 +29,8 @@ class App {
     this.routes();
   }
   middlewares() {
+    this.app.use(cors());
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
   }
