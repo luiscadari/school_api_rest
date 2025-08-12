@@ -5,7 +5,7 @@ class UserController {
     try {
       const newStudent = await User.create(req.body);
       const { email, name } = newStudent;
-      return res.status(200).json({ id, email, name });
+      return res.status(200).json({ email, name });
     } catch (e) {
       console.log(e);
       return res
